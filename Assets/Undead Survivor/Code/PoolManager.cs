@@ -20,4 +20,28 @@ public class PoolManager : MonoBehaviour
         }
         Debug.Log(pools.Length);
     }
+    public GameObject Get(int index)
+    {
+        GameObject select = null;
+
+        // ... 선택한 풀의 비활성화된 게임 오브젝트 접근
+        foreach (GameObject item in pools[index])
+        {
+            if (!item.activeSelf)
+            {
+                //... 발견하면 select 변수에 할당
+                select = item;
+                select.SetActive(true);
+                break;
+            }
+        }
+        // ...못 찾았다면
+        if (!select)
+        {
+            // ... 새롭게 생성하고 select에 할당
+            select = Instantiate(prefabs[index], transform);
+            pools[index].Add(select);
+        }
+        return select;
+    }
 }
